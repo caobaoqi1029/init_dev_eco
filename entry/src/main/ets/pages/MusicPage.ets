@@ -4,6 +4,6 @@
 export struct MusicPage {
 
   build() {
-    Text('歌曲播放页面')
+    Text('歌曲播放页面').fontColor(Color.White)
   }
 }

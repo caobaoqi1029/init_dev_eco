@@ -1,4 +1,7 @@
+import { FindPage } from './FindPage';
+import { MomentPage } from './MomentPage';
 import { MusicPage } from './MusicPage';
+import { RecommendPage } from './RecommendPage';
 @Entry
 @Component
 struct Index {
@@ -26,22 +29,21 @@ struct Index {
     Column(){
       Tabs({ barPosition: BarPosition.End, controller: this.tabsController }) {
         TabContent() {
-          Text('推荐的内容').fontSize(30).fontColor(Color.White)
-        }
-        .backgroundColor(Color.Black).tabBar(this.TabBuilder('推荐',0,$r('app.media.ic_recommend')))
+          RecommendPage()
+        }.backgroundColor(Color.Black).tabBar(this.TabBuilder('推荐',0,$r('app.media.ic_recommend')))
 
         TabContent() {
-          Text('发现的内容').fontSize(30).fontColor(Color.White)
-        }
-        .backgroundColor(Color.Black).tabBar(this.TabBuilder('发现',1,$r('app.media.ic_find')))
+          FindPage()
+        }.backgroundColor(Color.Black).tabBar(this.TabBuilder('发现',1,$r('app.media.ic_find')))
+
         TabContent() {
           MusicPage()
-        }
-        .backgroundColor(Color.Black).tabBar(this.TabBuilder('音乐',2,$r('app.media.ic_music')))
+        }.backgroundColor(Color.Black).tabBar(this.TabBuilder('音乐',2,$r('app.media.ic_music')))
+
         TabContent() {
-          Text('动态的内容').fontSize(30).fontColor(Color.White)
-        }
-        .backgroundColor(Color.Black).tabBar(this.TabBuilder('动态',3,$r('app.media.ic_moment')))
+          MomentPage()
+        }.backgroundColor(Color.Black).tabBar(this.TabBuilder('动态',3,$r('app.media.ic_moment')))
+
       }.backgroundColor('#ff353434')
       .onChange((index) => {
         // index 代表当前用户所点击的页面 id

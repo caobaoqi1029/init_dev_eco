@@ -3,6 +3,9 @@
     "pages/Index",
     "pages/HelloHarmonyOSPage",
     "pages/ADPage",
-    "pages/MusicPage"
+    "pages/MusicPage",
+    "pages/RecommendPage",
+    "pages/FindPage",
+    "pages/MomentPage"
   ]
 }
