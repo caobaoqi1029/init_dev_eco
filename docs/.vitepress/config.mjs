@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/init_dev_eco/',
   title: "Harmony OS Study",
   description: "鸿蒙 启动！",
 
