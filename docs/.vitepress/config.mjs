@@ -13,6 +13,7 @@ export default defineConfig({
         text: '😶‍🌫️ 鸿蒙 启动',
         items: [
           { text: 'DevEco 环境安装', link: '/path-install' },
+          { text: '我的第一个应用', link: '/start' },
 
         ]
       }
@@ -23,6 +24,7 @@ export default defineConfig({
         text: '鸿蒙 启动！',
         items: [
           { text: 'DevEco 环境安装', link: '/path-install' },
+          { text: '我的第一个应用', link: '/start' },
 
         ]
       }

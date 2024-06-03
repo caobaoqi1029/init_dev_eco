@@ -59,7 +59,7 @@ const members = [
 
 | 工具            | 版本                        |
 | --------------- | --------------------------- |
-| Dev Eco Studion | DevEco Studio 3.1.1 Release |
+| Dev Eco Studio | DevEco Studio 3.1.1 Release |
 | Node            | v16.19.1                    |
 | ohpm            | 1.2.0                       |
 
