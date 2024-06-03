@@ -1,3 +1,4 @@
+import { MusicPage } from './MusicPage';
 @Entry
 @Component
 struct Index {
@@ -34,7 +35,7 @@ struct Index {
         }
         .backgroundColor(Color.Black).tabBar(this.TabBuilder('发现',1,$r('app.media.ic_find')))
         TabContent() {
-          Text('音乐的内容').fontSize(30).fontColor(Color.White)
+          MusicPage()
         }
         .backgroundColor(Color.Black).tabBar(this.TabBuilder('音乐',2,$r('app.media.ic_music')))
         TabContent() {
