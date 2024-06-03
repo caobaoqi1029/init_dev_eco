@@ -2,15 +2,15 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "DevEco",
-  description: "A study project for HuaWei",
+  title: "Harmony OS Study",
+  description: "鸿蒙 启动！",
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
       {
-        text: '鸿蒙 启动',
+        text: '😶‍🌫️ 鸿蒙 启动',
         items: [
           { text: 'DevEco 环境安装', link: '/path-install' },
 
