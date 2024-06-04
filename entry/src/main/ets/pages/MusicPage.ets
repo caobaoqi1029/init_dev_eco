@@ -1,10 +1,18 @@
 import { songItemType,musicList } from '../model/SongModel';
+import { AvPlayerManager } from '../services/AvPlayerManager';
 @Entry
 @Component
   // export 表示将当前页面导出
 export struct MusicPage {
   private musicList = musicList;
   @State angel: number = 0; // 唱片初始角度
+
+  /**
+   * Music 页面创建时初始化 AvPlayer 对象
+   */
+  async aboutToAppear(){
+    await AvPlayerManager.init()
+  }
 
   @Builder itemEnd(index: number) {
     // 侧滑后尾端出现的组件
@@ -84,6 +92,9 @@ export struct MusicPage {
                   }
                 }.layoutWeight(1)
                 Image($r('app.media.ic_play')).width('100px').height('100px').margin({right:15})
+                  .onClick(() =>{
+                  AvPlayerManager.playMusic(item)
+                })
               }.width('100%') // 将 Text('' + item.id).fontSize(20).fontColor(Color.White) 置于容器左边，一般是在父容器 添加 .width('100%')
             }.swipeAction({ end: this.itemEnd(id) }) // 设置侧滑属性
           }, item => item.id)

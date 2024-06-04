@@ -18,3 +18,9 @@
 
 ## 2.5 发布到模拟器 （开启网络权限）
 
+
+
+## 2.6 使用 AvPlayer 开发音频播放功能
+
+https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V2/using-avplayer-for-playback-0000001504424437-V2
+

@@ -1,4 +1,8 @@
-// 歌曲对象
+/**
+ * 歌曲对象
+ * @author cbq
+ * @since 1.0
+ */
 export interface songItemType {
   img: string
   name: string
