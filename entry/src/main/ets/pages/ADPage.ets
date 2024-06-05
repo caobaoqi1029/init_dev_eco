@@ -20,7 +20,7 @@ struct ADPage {
     },1000)
   }
 
-  build() {
+  @Builder AdBuilder(){
     // 广告页面
     Stack({alignContent:Alignment.TopEnd}){
       // 底部图片
@@ -33,6 +33,12 @@ struct ADPage {
           // 点击跳过
           router.replaceUrl({url:'pages/Index'})
         })
+    }
+  }
+
+  build() {
+    Row(){
+      this.AdBuilder()
     }
   }
 }
