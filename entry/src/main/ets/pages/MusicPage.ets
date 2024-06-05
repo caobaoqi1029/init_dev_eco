@@ -9,13 +9,7 @@ export struct MusicPage {
   @State angel: number = 0; // 唱片初始角度
   @State isPlaying: boolean = false // 是否处于播放状态 false 为播放 true 表示播放中
   @State currentIndex: number = -1 // 当前播放歌曲 index 默认为 -1 表示没有播放
-  @State currentMusic: songItemType = {
-    img: 'http://p1.music.126.net/MgrERz_auwIi5Km64TxwjQ==/109951169154658797.jpg?param=300x300',
-    name: '离别开出花',
-    author: '就是南方凯',
-    url: 'http://music.163.com/song/media/outer/url?id=2061978961.mp3',
-    id: '010'
-  } // 当前播放歌曲
+  @State currentMusic: songItemType = null // 当前播放歌曲
   @State totalTime: number = 0 // 表示歌曲总时长
   @State currentTime: number = 0 // 表示歌曲当前播放的时长
 
@@ -72,8 +66,8 @@ export struct MusicPage {
   build() {
     Column() {
       Column() {
-        Text(this.currentMusic.name).fontWeight(FontWeight.Bold).fontColor(Color.White).margin({ top: 15 })
-        Text(this.currentMusic.author)
+        Text(this.currentMusic === null?'离别开出花':this.currentMusic.name).fontWeight(FontWeight.Bold).fontColor(Color.White).margin({ top: 15 })
+        Text(this.currentMusic === null?'就南方的凯':this.currentMusic.author)
           .fontWeight(FontWeight.Normal)
           .fontSize(10)
           .fontColor(Color.White)
