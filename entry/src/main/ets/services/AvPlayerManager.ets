@@ -35,4 +35,18 @@ export class AvPlayerManager{
     console.log('myLog --> ' + song.url)
   }
 
+  /**
+   * 暂停播放
+   */
+  static async pauseMusic(){
+    await this.AvPlayer.pause()
+  }
+
+  /**
+   * 指定时间戳播放
+   */
+  static async seekMusic(time:number){
+    await this.AvPlayer.seek(time)
+  }
+
 }

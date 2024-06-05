@@ -77,11 +77,18 @@ export const musicList: songItemType[] = [
     id: '008'
   },
   {
-    img: 'http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/12.jpg',
+    img: 'http://p1.music.126.net/iYM2AQAKspZkkq83kI9HjA==/109951163194512664.jpg?param=1500x1600',
     name: '一生所爱',
     author: '卢冠廷 / 莫文蔚',
     url: 'http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/12.m4a',
     id: '009'
+  },
+  {
+    img: 'http://p1.music.126.net/MgrERz_auwIi5Km64TxwjQ==/109951169154658797.jpg?param=300x300',
+    name: '离别开出花',
+    author: '就是南方凯',
+    url: 'http://music.163.com/song/media/outer/url?id=2061978961.mp3',
+    id: '010'
   }
 ]
 // export const muiscList: songItemType[] = [

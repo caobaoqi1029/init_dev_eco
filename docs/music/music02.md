@@ -22,5 +22,7 @@
 
 ## 2.6 使用 AvPlayer 开发音频播放功能
 
-https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V2/using-avplayer-for-playback-0000001504424437-V2
+> [!TIP]
+>
+> 官方文档介绍 https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V2/using-avplayer-for-playback-0000001504424437-V2
 
