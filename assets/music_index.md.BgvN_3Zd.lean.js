@@ -1,0 +1,1 @@
+import{_ as l,c as i,o as t,a4 as e}from"./chunks/framework.BwQg4lP7.js";const h=JSON.parse('{"title":"黑马云音乐","description":"","frontmatter":{},"headers":[],"relativePath":"music/index.md","filePath":"music/index.md"}'),a={name:"music/index.md"},s=e("",5),c=[s];function o(r,n,_,u,d,m){return t(),i("div",null,c)}const f=l(a,[["render",o]]);export{h as __pageData,f as default};

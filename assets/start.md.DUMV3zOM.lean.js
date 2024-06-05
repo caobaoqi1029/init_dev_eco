@@ -1,1 +1,0 @@
-import{_ as t,c as a,o as e,a4 as o}from"./chunks/framework.BwQg4lP7.js";const h=JSON.parse('{"title":"我的第一个应用","description":"","frontmatter":{},"headers":[],"relativePath":"start.md","filePath":"start.md"}'),c={name:"start.md"},i=o("",7),p=[i];function s(r,m,n,_,g,l){return e(),a("div",null,p)}const u=t(c,[["render",s]]);export{h as __pageData,u as default};
