@@ -1,4 +1,3 @@
-
 import media from '@ohos.multimedia.media'
 import { songItemType } from '../model/SongModel'
 /**
@@ -6,14 +5,14 @@ import { songItemType } from '../model/SongModel'
  * @author cbq
  * @since 1.0
  */
-export class AvPlayerManager{
-  static AvPlayer:media.AVPlayer = Object()
+export class AvPlayerManager {
+  static AvPlayer: media.AVPlayer = Object()
   /**
    * 1.初始化 AvPlayer 对象
    */
-  static async init(){
+  static async init() {
     this.AvPlayer = await media.createAVPlayer()
-    this.AvPlayer.on('stateChange',(state) => {
+    this.AvPlayer.on('stateChange', (state) => {
       if (state === 'initialized') {
         // 3. 获取到播放源后通过 prepare() 将状态转换为 prepared 准备播放状态
         this.AvPlayer.prepare()
@@ -28,7 +27,7 @@ export class AvPlayerManager{
   /**
    * 2. 定义播放歌曲
    */
-    static async  playMusic(song:songItemType){
+  static async playMusic(song: songItemType) {
     // 将 song.url 赋值到 AvPlayer.url
     await this.AvPlayer.reset()
     this.AvPlayer.url = song.url
@@ -38,15 +37,15 @@ export class AvPlayerManager{
   /**
    * 暂停播放
    */
-  static async pauseMusic(){
+  static async pauseMusic() {
     await this.AvPlayer.pause()
   }
 
   /**
    * 指定时间戳播放
    */
-  static async seekMusic(time:number){
-    await this.AvPlayer.seek(time)
+  static seekMusic(time: number) {
+    this.AvPlayer.seek(time)
   }
 
 }

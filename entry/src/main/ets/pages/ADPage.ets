@@ -1,4 +1,5 @@
 import router from '@ohos.router';
+import { LogUtils } from '../utils/LogUtils';
 @Entry
 @Component
 struct ADPage {
@@ -11,7 +12,7 @@ struct ADPage {
     // 创建定时器 该函数接受一个 Function 和 Number(每隔多少时间执行前面的函数)
      this.time = setInterval(() => {
        this.adTime --
-       console.log(this.adTime.toString())
+       LogUtils.log(this.adTime.toString())
        if (this.adTime <= 0) {
          clearInterval(this.time)
          // 跳转到首页 replaceUrl() 代表将当前页面替换，无法返回

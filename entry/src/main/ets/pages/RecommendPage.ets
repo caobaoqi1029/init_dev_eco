@@ -25,19 +25,22 @@ export struct RecommendPage {
       Row(){
         Swiper(this.swiperController) {
             ForEach(this.swiperList, (item: string, index: number) => {
-                Image(item).borderRadius(20)
+                Image(item)
             })
           }.width('100%').height('25%')
+        .borderRadius(20)
         .autoPlay(true)
         .interval(1000)
-        .margin({top:15})
+        .indicatorStyle({
+          selectedColor: Color.White
+        })
       }
   }
 
 
 
   build() {
-    Column(){
+    Column({space:10}){
       // 1. 搜索区域
       this.searchBuilder()
       // 2. 轮播图

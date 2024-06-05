@@ -5,16 +5,9 @@ import { AvPlayerManager } from '../services/AvPlayerManager';
 @Component
 export struct FindPage {
   private musicList = musicList;
-  @State angel: number = 0; // 唱片初始角度
   @State isPlaying: boolean = false // 是否处于播放状态 false 为播放 true 表示播放中
   @State currentIndex: number = -1 // 当前播放歌曲 index 默认为 -1 表示没有播放
-  @State currentMusic: songItemType = {
-    img: 'http://p1.music.126.net/MgrERz_auwIi5Km64TxwjQ==/109951169154658797.jpg?param=300x300',
-    name: '离别开出花',
-    author: '就是南方凯',
-    url: 'http://music.163.com/song/media/outer/url?id=2061978961.mp3',
-    id: '010'
-  } // 当前播放歌曲
+  @State currentMusic: songItemType = null // 当前播放歌曲
   @State totalTime: number = 0 // 表示歌曲总时长
   @State currentTime: number = 0 // 表示歌曲当前播放的时长
 
@@ -41,109 +34,50 @@ export struct FindPage {
     })
   }
 
-  /**
-   * 格式化时间
-   * @param time
-   */
-  formatTime(time: number) {
-    let s = Math.ceil(time / 1000) // 向上取整
-    let min = Math.floor(s / 60) // 向下取整
-    let ss = s % 60
-    return min.toString().padStart(2,'0') + ':' + ss.toString().padStart(2,'0')
-  }
-
-  @Builder itemEnd(index: number) {
-    // 侧滑后尾端出现的组件
-    Button({ type: ButtonType.Circle }) {
-      Image($r('app.media.ic_like'))
-        .width(20)
-        .height(20)
-        .fillColor(Color.Red)
-        .colorBlend(Color.Red)
-        .colorFilter(Color.Red)
-        .borderColor(Color.Red)
-    }
-    .onClick(() => {
-      this.musicList.splice(index, 1);
-    })
+  @Builder maybeLikeListBuilder() {
+    List({ space: 10 }) {
+      ForEach(this.musicList, (item: songItemType, index: number) => {
+        ListItem() {
+          Row() {
+            Row() {
+              Image(item.img)
+                .width(40)
+                .height(40)
+                .margin(10)
+                .borderRadius(8)
+              Column({ space: 5 }) {
+                Text(item.name).fontSize(20).fontColor(Color.White).width('100%').fontWeight(600)
+                Text(item.author).fontSize(14).fontColor(Color.White).width('100%').fontWeight(500)
+              }
+            }.layoutWeight(1).onClick(() => {
+              // 播放歌曲
+              AvPlayerManager.playMusic(item)
+              // 将当前播放 index 赋值
+              this.currentIndex = index
+              this.currentMusic = musicList[this.currentIndex]
+              this.isPlaying = true
+            })
+          }
+          .width('100%') // 将 Text('' + item.id).fontSize(20).fontColor(Color.White) 置于容器左边，一般是在父容器 添加 .width('100%')
+        }
+      }, item => item.id)
+      ListItem() {
+        Text('已经到底了').fontColor(Color.Gray).width('100%').textAlign(TextAlign.Center)
+      }.padding({ bottom: 20 })
+    }.width('100%').height('100%')
+    .divider({
+      strokeWidth: 1,
+      startMargin: 60,
+      endMargin: 10,
+      color: '#ffe9f0f0'
+    }).scrollBar(BarState.Auto)
   }
 
   build() {
     Column() {
       // 先外再里 先上后下 先左后后
       Text('猜你喜欢').padding(15).fontColor('#ec5c87').fontWeight(800).width('100%').fontSize(30)
-      List({ space: 10 }) {
-        ForEach(this.musicList, (item: songItemType, index: number) => {
-          ListItem() {
-            Row() {
-              Row() {
-                Image(item.img)
-                  .width(40)
-                  .height(40)
-                  .margin(10)
-                  .borderRadius(8)
-                Column({ space: 5 }) {
-                  Text(item.name).fontSize(20).fontColor(Color.White).width('100%').fontWeight(600)
-                  Text(item.author).fontSize(14).fontColor(Color.White).width('100%').fontWeight(500)
-                }
-              }.layoutWeight(1)
-
-              if (this.isPlaying === false) {
-                Image($r('app.media.ic_play')).width('100px').height('100px').margin({ right: 15 })
-                  .onClick(() => {
-                    // 播放歌曲
-                    AvPlayerManager.playMusic(item)
-                    // 将当前播放 index 赋值
-                    this.currentIndex = index
-                    this.currentMusic = musicList[this.currentIndex]
-                    console.log("myLog --> currentMusic: " + this.currentMusic.name)
-                    this.isPlaying = true
-                  })
-              }
-              if (this.isPlaying === true) {
-                if (index === this.currentIndex) {
-                  // 播放动画
-                  Image($r('app.media.ic_playing')).width(50)
-                  Image($r('app.media.ic_paused'))
-                    .width('100px')
-                    .height('100px')
-                    .margin({ right: 15 })
-                    .fillColor(Color.White)
-                    .onClick(() => {
-                      // 暂停当前播放的歌曲
-                      AvPlayerManager.pauseMusic()
-                      this.isPlaying = false
-                    })
-                } else {
-                  Image($r('app.media.ic_play')).width('100px').height('100px').margin({ right: 15 })
-                    .onClick(() => {
-                      // 播放歌曲
-                      AvPlayerManager.playMusic(item)
-                      // 将当前播放 index 赋值
-                      this.currentIndex = index
-                      this.currentMusic = musicList[this.currentIndex]
-                      this.isPlaying = true
-                    })
-                }
-
-              }
-            }
-            .width('100%') // 将 Text('' + item.id).fontSize(20).fontColor(Color.White) 置于容器左边，一般是在父容器 添加 .width('100%')
-          }.swipeAction({ end: this.itemEnd(index) }) // 设置侧滑属性
-        }, item => item.id)
-        ListItem() {
-          Text('已经到底了').fontColor(Color.Gray).width('100%').textAlign(TextAlign.Center)
-        }.padding({ bottom: 20 })
-      }.width('100%').height('100%')
-      .divider({
-        strokeWidth: 1,
-        startMargin: 60,
-        endMargin: 10,
-        color: '#ffe9f0f0'
-      }).scrollBar(BarState.Auto)
-    }      .borderRadius({ topLeft: 15, topRight: 15 })
-    .width('100%')
-    .backgroundColor('#ff2b2a2a')
-    .layoutWeight(2) //表示你要占整个屏幕的多少
+      this.maybeLikeListBuilder()
+    }.width('100%').backgroundColor('#ff2b2a2a').layoutWeight(2) //表示你要占整个屏幕的多少
   }
 }
