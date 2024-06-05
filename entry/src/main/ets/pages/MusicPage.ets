@@ -9,15 +9,15 @@ export struct MusicPage {
   @State angel: number = 0; // 唱片初始角度
   @State isPlaying: boolean = false // 是否处于播放状态 false 为播放 true 表示播放中
   @State currentIndex: number = -1 // 当前播放歌曲 index 默认为 -1 表示没有播放
-  @State currentMusic: songItemType =     {
+  @State currentMusic: songItemType = {
     img: 'http://p1.music.126.net/MgrERz_auwIi5Km64TxwjQ==/109951169154658797.jpg?param=300x300',
     name: '离别开出花',
     author: '就是南方凯',
     url: 'http://music.163.com/song/media/outer/url?id=2061978961.mp3',
     id: '010'
-  }// 当前播放歌曲
-  @State totalTime : number = 0 // 表示歌曲总时长
-  @State currentTime : number = 0 // 表示歌曲当前播放的时长
+  } // 当前播放歌曲
+  @State totalTime: number = 0 // 表示歌曲总时长
+  @State currentTime: number = 0 // 表示歌曲当前播放的时长
 
   /**
    * Music 页面创建时初始化 AvPlayer 对象
@@ -31,15 +31,26 @@ export struct MusicPage {
   /**
    * 获取当前歌曲相关信息
    */
-  async onTime(){
+  async onTime() {
     // durationUpdate 表示获取歌曲总时长
-    AvPlayerManager.AvPlayer.on('durationUpdate',(time) => {
+    AvPlayerManager.AvPlayer.on('durationUpdate', (time) => {
       this.totalTime = time
     })
     // timeUpdate 表示当前歌曲播放的时长
-    AvPlayerManager.AvPlayer.on('timeUpdate',(time) => {
+    AvPlayerManager.AvPlayer.on('timeUpdate', (time) => {
       this.currentTime = time
     })
+  }
+
+  /**
+   * 格式化时间
+   * @param time
+   */
+  formatTime(time: number) {
+    let s = Math.ceil(time / 1000) // 向上取整
+    let min = Math.floor(s / 60) // 向下取整
+    let ss = s % 60
+    return min.toString().padStart(2,'0') + ':' + ss.toString().padStart(2,'0')
   }
 
   @Builder itemEnd(index: number) {
@@ -62,7 +73,11 @@ export struct MusicPage {
     Column() {
       Column() {
         Text(this.currentMusic.name).fontWeight(FontWeight.Bold).fontColor(Color.White).margin({ top: 15 })
-        Text(this.currentMusic.author).fontWeight(FontWeight.Normal).fontSize(10).fontColor(Color.White).margin({ top: 5 })
+        Text(this.currentMusic.author)
+          .fontWeight(FontWeight.Normal)
+          .fontSize(10)
+          .fontColor(Color.White)
+          .margin({ top: 5 })
         Image($r('app.media.ic_cd'))
           .height('50%')
           .margin({ top: 15 })
@@ -76,7 +91,7 @@ export struct MusicPage {
             iterations: -1 // -1：一直旋转
           })
         Row() {
-          Text(this.currentTime.toFixed(0)).fontColor(Color.White)
+          Text(this.formatTime(this.currentTime)).fontColor(Color.White)
           Slider({
             min: 0,
             step: 10,
@@ -93,7 +108,7 @@ export struct MusicPage {
             .blockColor('#191970')
             .trackColor('#ADD8E6')
             .selectedColor('#4169E1')
-          Text(this.totalTime.toFixed(0)).fontColor(Color.White)
+          Text(this.formatTime(this.totalTime)).fontColor(Color.White)
         }.width('100%')
       }
       .width('100%').margin({ top: 10 }).layoutWeight(1)
