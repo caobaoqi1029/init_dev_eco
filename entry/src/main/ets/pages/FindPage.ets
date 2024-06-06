@@ -39,44 +39,54 @@ export struct FindPage {
       ForEach(this.musicList, (item: songItemType, index: number) => {
         ListItem() {
           Row() {
+            Image(item.img)
+              .width(65)
+              .height(65)
+              .margin(10)
+              .borderRadius(8)
             Row() {
-              Image(item.img)
-                .width(40)
-                .height(40)
-                .margin(10)
-                .borderRadius(8)
               Column({ space: 5 }) {
                 Text(item.name).fontSize(20).fontColor(Color.White).width('100%').fontWeight(600)
-                Text(item.author).fontSize(14).fontColor(Color.White).width('100%').fontWeight(500)
+                Row({ space: 5 }) {
+                  Stack() {
+                    Shape() {
+                      Rect().width(35).height(20).radius(50).fill('#ff2b2a2a').stroke('#ffcfad2d')
+
+                    }
+
+                    Text(' VIP ').fontColor('#ffcfad2d').fontSize(12)
+                  }
+
+                  Text(item.author).fontSize(14).fontColor(Color.White).width('100%').fontWeight(400)
+                }
               }
-            }.layoutWeight(1).onClick(() => {
-              // 播放歌曲
-              AvPlayerManager.playMusic(item)
-              // 将当前播放 index 赋值
-              this.currentIndex = index
-              this.currentMusic = musicList[this.currentIndex]
-              this.isPlaying = true
-            })
-          }
-          .width('100%') // 将 Text('' + item.id).fontSize(20).fontColor(Color.White) 置于容器左边，一般是在父容器 添加 .width('100%')
-        }
+            }.layoutWeight(1)
+            Image($r('app.media.ic_more')).width('100px').height('100px').fillColor(Color.White)
+          }.width('100%') // 将 Text('' + item.id).fontSize(20).fontColor(Color.White) 置于容器左边，一般是在父容器 添加 .width('100%')
+        }.onClick(() => {
+          // 播放歌曲
+          AvPlayerManager.playMusic(item)
+          // 将当前播放 index 赋值
+          this.currentIndex = index
+          this.currentMusic = musicList[this.currentIndex]
+          this.isPlaying = true
+        })
       }, item => item.id)
       ListItem() {
         Text('已经到底了').fontColor(Color.Gray).width('100%').textAlign(TextAlign.Center)
       }.padding({ bottom: 20 })
-    }.width('100%').height('100%')
-    .divider({
-      strokeWidth: 1,
-      startMargin: 60,
-      endMargin: 10,
-      color: '#ffe9f0f0'
-    }).scrollBar(BarState.Auto)
+    }.width('100%').height('100%').scrollBar(BarState.Auto)
   }
 
   build() {
     Column() {
       // 先外再里 先上后下 先左后后
-      Text('猜你喜欢').padding(15).fontColor('#ec5c87').fontWeight(800).width('100%').fontSize(30)
+      Text('猜你喜欢')
+        .padding(15)
+        .fontColor('#ffc6bec0')
+        .fontWeight(800)
+        .width('100%')
+        .fontSize(15)
       this.maybeLikeListBuilder()
     }.width('100%').backgroundColor('#ff2b2a2a').layoutWeight(2) //表示你要占整个屏幕的多少
   }
