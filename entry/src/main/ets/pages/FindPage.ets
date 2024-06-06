@@ -1,11 +1,15 @@
+import SongTable from '../db/SongTable';
+import Song from '../model/Song';
 import { musicList, songItemType } from '../model/SongModel';
-import { AvPlayerManager } from '../services/AvPlayerManager';
+import { AvPlayerManager } from '../services/AvPlayerManagerV2';
 import { LogUtils } from '../utils/LogUtils';
 
 @Entry
 @Component
 export struct FindPage {
-  private musicList = musicList;
+  @State musicList: Array<Song> = []
+  private songTable: SongTable = new SongTable(() => {
+  })
   @State isPlaying: boolean = false // 是否处于播放状态 false 为播放 true 表示播放中
   @State currentIndex: number = -1 // 当前播放歌曲 index 默认为 -1 表示没有播放
   @State currentMusic: songItemType = null // 当前播放歌曲
@@ -16,6 +20,11 @@ export struct FindPage {
    * Music 页面创建时初始化 AvPlayer 对象
    */
   async aboutToAppear() {
+    this.songTable.getRdbStore(() => {
+      this.songTable.queryAllData(1, (result: Array<Song>) => {
+        this.musicList = result;
+      })
+    })
     await AvPlayerManager.init()
     // 获取当前歌曲的相关信息
     await this.onTime()
@@ -48,27 +57,13 @@ export struct FindPage {
     }
     .onClick(() => {
       this.musicList.splice(index, 1);
-      // 找到具有指定id的对象的索引
-      let indexToRemove = this.musicList.findIndex(item => {
-        parseInt(item.id) === index
-        LogUtils.log('item.id' + item.id)
-        LogUtils.log('index' + index)
-      });
-      LogUtils.log('indexToRemove' + indexToRemove)
-
-
-      // 如果找到了索引，则使用splice方法删除该对象
-      if (indexToRemove !== -1) {
-        this.musicList.splice(indexToRemove, 1);
-      }
-
-
+      LogUtils.log('index: ' + index)
     })
   }
 
   @Builder maybeLikeListBuilder() {
     List({ space: 10 }) {
-      ForEach(this.musicList, (item: songItemType, index: number) => {
+      ForEach(this.musicList, (item: Song, index: number) => {
         ListItem() {
           Row() {
             Image(item.img)

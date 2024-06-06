@@ -24,8 +24,7 @@ export default class SongTable {
    */
   initData(songs: Array<Song>, callback: Function) {
     for (let i = 0; i < songs.length; i++) {
-      let song: Song = songs[i];
-      this.insertData(song, () => {
+      this.insertData(songs[i], () => {
       });
     }
     callback(1);
