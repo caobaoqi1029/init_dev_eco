@@ -6,6 +6,7 @@
     "pages/MusicPage",
     "pages/RecommendPage",
     "pages/FindPage",
-    "pages/MomentPage"
+    "pages/MomentPage",
+    "pages/DBPage"
   ]
 }
