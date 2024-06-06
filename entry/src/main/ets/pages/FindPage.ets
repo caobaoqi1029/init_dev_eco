@@ -1,5 +1,6 @@
 import { musicList, songItemType } from '../model/SongModel';
 import { AvPlayerManager } from '../services/AvPlayerManager';
+import { LogUtils } from '../utils/LogUtils';
 
 @Entry
 @Component
@@ -34,6 +35,37 @@ export struct FindPage {
     })
   }
 
+  @Builder itemEnd(index: number) {
+    // 侧滑后尾端出现的组件
+    Button({ type: ButtonType.Circle }) {
+      Image($r('app.media.ic_like'))
+        .width(20)
+        .height(20)
+        .fillColor(Color.Red)
+        .colorBlend(Color.Red)
+        .colorFilter(Color.Red)
+        .borderColor(Color.Red)
+    }
+    .onClick(() => {
+      this.musicList.splice(index, 1);
+      // 找到具有指定id的对象的索引
+      let indexToRemove = this.musicList.findIndex(item => {
+        parseInt(item.id) === index
+        LogUtils.log('item.id' + item.id)
+        LogUtils.log('index' + index)
+      });
+      LogUtils.log('indexToRemove' + indexToRemove)
+
+
+      // 如果找到了索引，则使用splice方法删除该对象
+      if (indexToRemove !== -1) {
+        this.musicList.splice(indexToRemove, 1);
+      }
+
+
+    })
+  }
+
   @Builder maybeLikeListBuilder() {
     List({ space: 10 }) {
       ForEach(this.musicList, (item: songItemType, index: number) => {
@@ -50,7 +82,12 @@ export struct FindPage {
                 Row({ space: 5 }) {
                   Stack() {
                     Shape() {
-                      Rect().width(35).height(20).radius(50).fill('#ff2b2a2a').stroke('#ffcfad2d')
+                      Rect()
+                        .width(35)
+                        .height(20)
+                        .radius(50)
+                        .fill('#ff2b2a2a')
+                        .stroke('#ffcfad2d')
 
                     }
 
@@ -61,7 +98,46 @@ export struct FindPage {
                 }
               }
             }.layoutWeight(1)
-            Image($r('app.media.ic_more')).width('100px').height('100px').fillColor(Color.White)
+
+            if (this.isPlaying === false) {
+              Image($r('app.media.ic_play')).width('100px').height('100px').margin({ right: 15 })
+                .onClick(() => {
+                  // 播放歌曲
+                  AvPlayerManager.playMusic(item)
+                  // 将当前播放 index 赋值
+                  this.currentIndex = index
+                  this.currentMusic = musicList[this.currentIndex]
+                  LogUtils.log('currentMusic:' + this.currentMusic.name)
+                  this.isPlaying = true
+                })
+            }
+            if (this.isPlaying === true) {
+              if (index === this.currentIndex) {
+                // 播放动画
+                Image($r('app.media.ic_playing')).width(50)
+                Image($r('app.media.ic_paused'))
+                  .width('100px')
+                  .height('100px')
+                  .margin({ right: 15 })
+                  .fillColor(Color.White)
+                  .onClick(() => {
+                    // 暂停当前播放的歌曲
+                    AvPlayerManager.pauseMusic()
+                    this.isPlaying = false
+                  })
+              } else {
+                Image($r('app.media.ic_play')).width('100px').height('100px').margin({ right: 15 })
+                  .onClick(() => {
+                    // 播放歌曲
+                    AvPlayerManager.playMusic(item)
+                    // 将当前播放 index 赋值
+                    this.currentIndex = index
+                    this.currentMusic = musicList[this.currentIndex]
+                    this.isPlaying = true
+                  })
+              }
+
+            }
           }.width('100%') // 将 Text('' + item.id).fontSize(20).fontColor(Color.White) 置于容器左边，一般是在父容器 添加 .width('100%')
         }.onClick(() => {
           // 播放歌曲
@@ -70,12 +146,23 @@ export struct FindPage {
           this.currentIndex = index
           this.currentMusic = musicList[this.currentIndex]
           this.isPlaying = true
-        })
+        }).swipeAction({ end: this.itemEnd(index) }) // 设置侧滑属性
       }, item => item.id)
       ListItem() {
         Text('已经到底了').fontColor(Color.Gray).width('100%').textAlign(TextAlign.Center)
       }.padding({ bottom: 20 })
     }.width('100%').height('100%').scrollBar(BarState.Auto)
+  }
+
+  /**
+   * 暂弃
+   */
+  @Builder musicPlayerBuilder() {
+    Row() {
+      Text('图片').fontColor(Color.White).width('90')
+      Text('音乐信息').fontColor(Color.White).layoutWeight(1)
+      Text('播放|暂停按钮').fontColor(Color.White)
+    }.width('100%').height('5%')
   }
 
   build() {

@@ -136,7 +136,6 @@ export struct MusicPage {
                   Text(item.author).fontSize(14).fontColor(Color.White).width('100%').fontWeight(500)
                 }
               }.layoutWeight(1)
-
               if (this.isPlaying === false) {
                 Image($r('app.media.ic_play')).width('100px').height('100px').margin({ right: 15 })
                   .onClick(() => {
