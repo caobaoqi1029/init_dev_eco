@@ -1,48 +1,52 @@
-import { recommendDailyType } from '../model/Music';
-import { dailyRecommend, swiperList } from '../model/MusicConstants';
+import { recommendListType, recommendListTypeModel } from '../model/Music'
+import { dailyRecommend, recommendList, swiperList } from '../model/MusicConstants'
+// @ts-ignore
+import { recommendDailyType } from '../model/MusicConstants'
+
 @Entry
 @Component
 export struct RecommendPage {
-  private swiperController: SwiperController = new SwiperController()
-  private swiperList = swiperList;
+  @Builder
+  searchBuilder() {
+    Row() {
+      Image($r('app.media.ic_search'))
+        .width(25)
+        .fillColor(Color.Gray)
 
-  /**
-   * 搜索框
-   */
-  @Builder searchBuilder(){
-   Row(){
-      Image($r('app.media.ic_search')).width(25).fillColor(Color.Gray)
-      Text('只因你太美 🔥').layoutWeight(1)
-     Image($r('app.media.ic_code')).width(25).fillColor(Color.Gray)
 
-   }.width('100%').height('42').padding({left:12,right:12})
-   .backgroundColor('#ff4f4d4d').borderRadius(60)
+      Text('只因你太美🔥')
+        .fontColor(Color.Gray)
+        .layoutWeight(1)
+
+      Image($r('app.media.ic_code'))
+        .width(25)
+        .fillColor(Color.Gray)
+
+    }
+    .padding({ left: 12, right: 12 })
+    .width('100%')
+    .height(42)
+    .backgroundColor('#ff292929')
+    .borderRadius(60)
   }
 
-  /**
-   * 轮播图
-   */
-  @Builder swiperBuilder(){
-      Row(){
-        Swiper(this.swiperController) {
-            ForEach(this.swiperList, (item: string, index: number) => {
-                Image(item)
-            })
-          }.width('100%').height('25%')
-        .borderRadius(20)
-        .autoPlay(true)
-        .interval(1000)
-        .indicatorStyle({
-          selectedColor: Color.White
-        })
-      }
+  @Builder
+  swiperBuilder() {
+    Swiper() {
+      ForEach(swiperList, (item: string) => {
+        Image(item)
+          .width('100%')
+      })
+    }
+    .loop(true)
+    .autoPlay(true)
+    .interval(3000)
+    .borderRadius(10)
+    .indicatorStyle({
+      selectedColor: Color.White
+    })
   }
 
-  /**
-   * 标题 Builder
-   * @param title 标题
-   * @param rightText 标题文本
-   */
   @Builder
   titleBuilder(title: string, rightText: string) {
     Row() {
@@ -55,9 +59,6 @@ export struct RecommendPage {
     .justifyContent(FlexAlign.SpaceBetween)
   }
 
-  /**
-   * 每日推荐 Builder
-   */
   @Builder
   recommendBuilder() {
     Scroll() {
@@ -78,7 +79,9 @@ export struct RecommendPage {
               .fontColor(Color.White)
               .backgroundColor(item.bottom)
               .fontSize(14)
-              .padding({ top: 10, bottom: 10,left:5,right:5 })
+              .padding({ top: 10, bottom: 10, left: 5, right: 5 })
+              .maxLines(2) //设置最大显示行数为2行
+              .textOverflow({ overflow: TextOverflow.Ellipsis }) //文字超出2行则使用...替代
           }
           .height(120)
           .width('40%')
@@ -91,20 +94,57 @@ export struct RecommendPage {
     .scrollable(ScrollDirection.Horizontal) //设置水平滚动
   }
 
+  @Builder
+  musicBuider() {
+    Scroll() {
+      Row({space:10}) {
+        ForEach(recommendList, (item: recommendListType) => {
+          Column({ space: 10 }) {
+            Stack({ alignContent: Alignment.TopStart }) {
+              Image(item.img)
+                .width('100%') // 这个不能省，如果省略会导致Scroll出问题
 
+              Text(item.count)
+                .fontColor(Color.White)
+                .margin(10)
+                .fontSize(12)
+                .fontWeight(800)
+            }
 
-  build() {
-    Column({space:10}){
-      // 1. 搜索区域
-      this.searchBuilder()
-      // 2. 轮播图
-      this.swiperBuilder()
-      // 3. 每日推荐
-      this.titleBuilder('每日推荐', '更多...')
-      this.recommendBuilder()
-      // 4. 推荐歌单
-
-    }.width('100%').height('100%').padding(10).backgroundColor(Color.Black)
+            Text(item.title)
+              .fontColor(Color.White)
+              .fontSize(12)
+              .maxLines(2)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+          }
+          .width('30%')
+        })
+      }
+    }
+    .scrollable(ScrollDirection.Horizontal)
   }
 
+  build() {
+    Column({ space: 20 }) {
+      //   1. 搜索区域
+      this.searchBuilder()
+
+      //   2. 轮播图
+      this.swiperBuilder()
+
+      //   3. 每日推荐
+      this.titleBuilder('每日推荐', '更多...')
+      // 每日推荐内容显示
+      this.recommendBuilder()
+
+      //   4. 推荐歌单
+      this.titleBuilder('推荐歌单', '更多...')
+      this.musicBuider()
+
+    }
+    .width('100%')
+    .height('100%')
+    .padding(10)
+    .backgroundColor(Color.Black)
+  }
 }
