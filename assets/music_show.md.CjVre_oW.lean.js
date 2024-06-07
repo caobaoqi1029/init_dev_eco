@@ -1,0 +1,1 @@
+import{_ as l,c as i,o,a4 as e}from"./chunks/framework.BwQg4lP7.js";const h=JSON.parse('{"title":"Ikun Music","description":"","frontmatter":{},"headers":[],"relativePath":"music/show.md","filePath":"music/show.md"}'),t={name:"music/show.md"},c=e("",30),d=[c];function a(r,s,u,n,g,p){return o(),i("div",null,d)}const b=l(t,[["render",a]]);export{h as __pageData,b as default};
