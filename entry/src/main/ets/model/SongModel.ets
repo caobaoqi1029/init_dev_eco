@@ -87,7 +87,7 @@ export const musicList: songItemType[] = [
     img: 'http://p1.music.126.net/MgrERz_auwIi5Km64TxwjQ==/109951169154658797.jpg?param=300x300',
     name: '离别开出花',
     author: '就是南方凯',
-    url: 'http://music.163.com/song/media/outer/url?id=2061978961.mp3',
+    url: 'http://music.163.com/song/media/outer/url?id=2127329045.mp3',
     id: '010'
   }
 ]

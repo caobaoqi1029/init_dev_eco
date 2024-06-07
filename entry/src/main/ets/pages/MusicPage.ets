@@ -201,7 +201,7 @@ export struct MusicPage {
       this.MusicPlayBuilder()
       this.musicListBuilder()
       Row(){
-        Button('left').layoutWeight(1).onClick(()=>{
+        Button('<- 🐔').layoutWeight(1).onClick(()=>{
           if (this.currentIndex -1 >= 0 && this.currentIndex < musicList.length) {
             AvPlayerManager.pauseMusic()
             this.currentIndex -= 1
@@ -209,7 +209,7 @@ export struct MusicPage {
             AvPlayerManager.playMusic(this.currentMusic)
           }
         })
-        Button('right').layoutWeight(1).onClick(()=>{
+        Button('🏀 ->').layoutWeight(1).onClick(()=>{
           if (this.currentIndex + 1 <= musicList.length&& this.currentIndex > 0) {
             AvPlayerManager.pauseMusic()
             this.currentIndex += 1

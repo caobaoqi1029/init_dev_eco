@@ -8,7 +8,7 @@ export const SongList:Array<Song>=[
   new Song(3,"佛系少女","冯提莫","http://music.163.com/song/media/outer/url?id=1869701934.mp3","http://p2.music.126.net/fzLb8mIeHLcDINhXlPJ0kA==/109951166286043013.jpg?param=300x300"),
   new Song(4,"做自己的光","DJ舒心","http://music.163.com/song/media/outer/url?id=2156636591.mp3","https://img1.kuwo.cn/star/albumcover/240/s3s42/65/2784609704.jpg"),
   new Song(5,"一笑倾城","就是南方凯","http://music.163.com/song/media/outer/url?id=1869972634.mp3","http://p1.music.126.net/XtQbs_V1OAvtZo9tmJFAJA==/1369991503018202.jpg?param=300x300"),
-  new Song(6,"离别开出花","就是南方凯","http://music.163.com/song/media/outer/url?id=2061978961.mp3","http://p1.music.126.net/MgrERz_auwIi5Km64TxwjQ==/109951169154658797.jpg?param=300x300"),
+  new Song(6,"离别开出花","就是南方凯","http://music.163.com/song/media/outer/url?id=2127329045.mp3","http://p1.music.126.net/MgrERz_auwIi5Km64TxwjQ==/109951169154658797.jpg?param=300x300"),
   new Song(7,"Everywhere We Go","陈冠希","http://music.163.com/song/media/outer/url?id=65739.mp3","https://img2.kuwo.cn/star/starheads/240/64/17/3370271515.jpg"),
   new Song(8,"植物大战僵尸","王文照","http://music.163.com/song/media/outer/url?id=1387591467.mp3","https://star.kuwo.cn/star/starheads/180/79/78/2507339289.jpg"),
   new Song(9,"琵琶行","奇然","http://music.163.com/song/media/outer/url?id=476513774.mp3","http://p2.music.126.net/y1ZIkrc8mAPuH6uo7mYWyg==/109951168534927670.jpg?param=300x300"),

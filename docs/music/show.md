@@ -1,33 +1,183 @@
-# Ikun Music
+# Ikun 云音乐
 
-# INFO
+| 学号     | 职责                                        |
+| -------- | ------------------------------------------- |
+| 🐔 曹宝琪 | 组长，负责项目管理任务分配，项目打包        |
+| 🎤 曹蓓   | dev，负责推荐页面的代码实现，文档撰写等工作 |
+| 💃 王文照 | dev，负责动态页面的代码实现                 |
+| 🗣️ 程柄惠 | dev，负责发现页面代码实现                   |
+| 🏀 宋文杰 | 音乐数据的收集以及 PPT 的制作               |
 
-| 学号              | 职责                                                       |
-| ----------------- | ---------------------------------------------------------- |
-| 曹宝琪 2309312102 | 小黑子组长，负责项目管理任务分配，项目打包，文档撰写等工作 |
-| 曹蓓 2309312103   | dev，负责动态页面的代码实现                                |
-| 王文照 2309312121 | 小黑子                                                     |
-| 程柄惠            | dev，负责发现页面代码实现                                  |
-| 宋文杰            | 小黑子                                                     |
-
-项目亮点：
-
-- 使用 RDB 操作数据库
-- 侧滑删除 music 、自定义播放控件 （可用于控制歌曲前进 | 后退）
-- 使用 git 协同开发、通过 vitePress 撰写文档更友好
+> [!TIP]
+>
+> 项目亮点：
+>
+> - 使用 RDB 操作数据库
+> - 侧滑删除 music 、自定义播放控件 （可用于控制歌曲前进 | 后退）
+> - 使用 git 协同开发、通过 vitePress 撰写文档更友好
 
 # 一、整体结构
 
-项目大致分为以下几个页面：
-
-- 推荐页面：展示分类信息
-- 发现页面：用于随机音乐推荐 （Random 待实现）
-- 音乐页面：主要用于听音乐
-- 动态页面：用于展示相关歌曲的评论以及转发点赞等信息
+> [!TIP]
+>
+> 项目大致分为以下几个页面：
+>
+> - 推荐页面：展示分类信息
+> - 发现页面：用于随机音乐推荐 （Random 待实现）
+> - 音乐页面：主要用于听音乐
+> - 动态页面：用于展示相关歌曲的评论以及转发点赞等信息
 
 # 二、页面
 
+> 🐔 鸡你太美 oh baby
+
 ## 2.1 推荐页面
+
+```ts
+import { recommendListType, recommendListTypeModel } from '../model/Music'
+import { dailyRecommend, recommendList, swiperList } from '../model/MusicConstants'
+// @ts-ignore
+import { recommendDailyType } from '../model/MusicConstants'
+
+@Entry
+@Component
+export struct RecommendPage {
+  @Builder
+  searchBuilder() {
+    Row() {
+      Image($r('app.media.ic_search'))
+        .width(25)
+        .fillColor(Color.Gray)
+      Text('只因你太美🔥')
+        .fontColor(Color.Gray)
+        .layoutWeight(1)
+      Image($r('app.media.ic_code'))
+        .width(25)
+        .fillColor(Color.Gray)
+    }
+    .padding({ left: 12, right: 12 })
+    .width('100%')
+    .height(42)
+    .backgroundColor('#ff292929')
+    .borderRadius(60)
+  }
+
+  @Builder
+  swiperBuilder() {
+    Swiper() {
+      ForEach(swiperList, (item: string) => {
+        Image(item)
+          .width('100%')
+      })
+    }
+    .loop(true)
+    .autoPlay(true)
+    .interval(3000)
+    .borderRadius(10)
+    .indicatorStyle({
+      selectedColor: Color.White
+    })
+  }
+
+  @Builder
+  titleBuilder(title: string, rightText: string) {
+    Row() {
+      Text(title)
+        .fontColor(Color.White)
+      Text(rightText)
+        .fontColor(Color.Gray)
+    }
+    .width('100%')
+    .justifyContent(FlexAlign.SpaceBetween)
+  }
+
+  @Builder
+  recommendBuilder() {
+    Scroll() {
+      Row({ space: 10 }) {
+        ForEach(dailyRecommend, (item: recommendDailyType) => {
+          Column() {
+            Text(item.type)
+              .fontColor(Color.White)
+              .fontWeight(800)
+              .fontSize(16)
+              .backgroundColor(item.top)
+              .width('100%')
+              .padding({ top: 10, bottom: 10 })
+
+            Image(item.img)
+
+            Text(item.title)
+              .fontColor(Color.White)
+              .backgroundColor(item.bottom)
+              .fontSize(14)
+              .padding({ top: 10, bottom: 10, left: 5, right: 5 })
+              .maxLines(2) //设置最大显示行数为2行
+              .textOverflow({ overflow: TextOverflow.Ellipsis }) //文字超出2行则使用...替代
+          }
+          .height(120)
+          .width('40%')
+        })
+      }
+      .margin({ top: -100 }) //用来修复Scroll自动将里面的内容往下留白的问题
+      .height(120)
+    }
+    .height(240)
+    .scrollable(ScrollDirection.Horizontal) //设置水平滚动
+  }
+
+  @Builder
+  musicBuider() {
+    Scroll() {
+      Row({space:10}) {
+        ForEach(recommendList, (item: recommendListType) => {
+          Column({ space: 10 }) {
+            Stack({ alignContent: Alignment.TopStart }) {
+              Image(item.img)
+                .width('100%') // 这个不能省，如果省略会导致Scroll出问题
+
+              Text(item.count)
+                .fontColor(Color.White)
+                .margin(10)
+                .fontSize(12)
+                .fontWeight(800)
+            }
+
+            Text(item.title)
+              .fontColor(Color.White)
+              .fontSize(12)
+              .maxLines(2)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+          }
+          .width('30%')
+        })
+      }
+    }
+    .scrollable(ScrollDirection.Horizontal)
+  }
+
+  build() {
+    Column({ space: 20 }) {
+      //   1. 搜索区域
+      this.searchBuilder()
+      //   2. 轮播图
+      this.swiperBuilder()
+      //   3. 每日推荐
+      this.titleBuilder('每日推荐', '更多...')
+      // 每日推荐内容显示
+      this.recommendBuilder()
+      //   4. 推荐歌单
+      this.titleBuilder('推荐歌单', '更多...')
+      this.musicBuider()
+    }
+    .width('100%')
+    .height('100%')
+    .padding(10)
+    .backgroundColor(Color.Black)
+  }
+}
+
+```
 
 `RecommendPage` 是一个用于展示音乐推荐内容的页面组件。它包含了搜索区域、轮播图、每日推荐和推荐歌单等模块。
 
@@ -49,6 +199,284 @@
 ![image-20240607112315754](https://2024-cbq-1311841992.cos.ap-beijing.myqcloud.com/picgo/image-20240607112315754.png)
 
 ## 2.2 发现页面
+
+> [!CAUTION]
+>
+> 着重讲解 DB 的实现
+
+```ts
+
+import relationalStore from '@ohos.data.relationalStore';
+import {SongTable} from '../model/SongTable'
+export default class CommonConstants {
+  static readonly RDB_TAG = '[Debug.Rdb]';
+  static readonly STORE_CONFIG: relationalStore.StoreConfig = {
+    name: 'database.db',
+    securityLevel: relationalStore.SecurityLevel.S1
+  };
+  static readonly Song_Table:SongTable = {
+    tableName: 'SongTable',
+    sqlCreate: 'CREATE TABLE IF NOT EXISTS SongTable(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ' +
+    'author TEXT, src INTEGER,img TEXT,style TEXT)',
+    columns: ['id', 'name', 'author', 'src','img','style']
+  };
+
+}
+
+```
+
+```ts
+import relationalStore from '@ohos.data.relationalStore';
+import Logger from '../utils/Logger'
+import CommonConstants from './CommonConstants';
+
+
+export default class Rdb{
+  private rdbStore: relationalStore.RdbStore | null = null;
+  private tableName: string;
+  private sqlCreateTable: string;
+  private columns: Array<string>;
+  constructor(tableName: string, sqlCreateTable: string, columns: Array<string>) {
+    this.tableName = tableName;
+    this.sqlCreateTable = sqlCreateTable;
+    this.columns = columns;
+  }
+  getRdbStore(callback: Function = () => {
+  }) {
+    if (!callback || typeof callback === 'undefined' || callback === undefined) {
+      Logger.info(CommonConstants.RDB_TAG, 'getRdbStore() has no callback!');
+      return;
+    }
+    if (this.rdbStore !== null) {
+      Logger.info(CommonConstants.RDB_TAG, 'The rdbStore exists.');
+      callback();
+      return
+    }
+    let context: Context = getContext(this) as Context;
+    relationalStore.getRdbStore(context, CommonConstants.STORE_CONFIG, (err, rdb) => {
+      if (err) {
+        Logger.error(CommonConstants.RDB_TAG, `gerRdbStore() failed, err: ${err}`);
+        return;
+      }
+      this.rdbStore = rdb;
+      this.rdbStore.executeSql(this.sqlCreateTable);
+      Logger.info(CommonConstants.RDB_TAG, 'getRdbStore() finished.');
+      callback();
+    });
+  }
+
+  insertData(data: relationalStore.ValuesBucket, callback: Function = () => {
+  }) {
+    if (!callback || typeof callback === 'undefined' || callback === undefined) {
+      Logger.info(CommonConstants.RDB_TAG, 'insertData() has no callback!');
+      return;
+    }
+    let resFlag: boolean = false;
+    const valueBucket: relationalStore.ValuesBucket = data;
+    if (this.rdbStore) {
+      this.rdbStore.insert(this.tableName, valueBucket, (err, ret) => {
+        if (err) {
+          Logger.info(CommonConstants.RDB_TAG,`this is joker${JSON.stringify(valueBucket)}`)
+          Logger.error(CommonConstants.RDB_TAG, `insertData() failed, err: ${err}  ${this.tableName}`);
+          callback(resFlag);
+          return;
+        }
+        Logger.info(CommonConstants.RDB_TAG, `insertData() finished: ${ret}`);
+        callback(ret);
+      });
+    }
+  }
+
+  deleteData(predicates: relationalStore.RdbPredicates, callback: Function = () => {
+  }) {
+    if (!callback || typeof callback === 'undefined' || callback === undefined) {
+      Logger.info(CommonConstants.RDB_TAG, 'deleteData() has no callback!');
+      return;
+    }
+    let resFlag: boolean = false;
+    if (this.rdbStore) {
+      this.rdbStore.delete(predicates, (err, ret) => {
+        if (err) {
+          Logger.error(CommonConstants.RDB_TAG, `deleteData() failed, err: ${err}`);
+          callback(resFlag);
+          return;
+        }
+        Logger.info(CommonConstants.RDB_TAG, `deleteData() finished: ${ret}`);
+        callback(!resFlag);
+      });
+    }
+  }
+
+  updateData(predicates: relationalStore.RdbPredicates, data: relationalStore.ValuesBucket, callback: Function = () => {
+  }) {
+    if (!callback || typeof callback === 'undefined' || callback === undefined) {
+      Logger.info(CommonConstants.RDB_TAG, 'updateDate() has no callback!');
+      return;
+    }
+    let resFlag: boolean = false;
+    const valueBucket: relationalStore.ValuesBucket = data;
+    if (this.rdbStore) {
+      this.rdbStore.update(valueBucket, predicates, (err, ret) => {
+        if (err) {
+          Logger.error(CommonConstants.RDB_TAG, `updateData() failed, err: ${err}`);
+          callback(resFlag);
+          return;
+        }
+        Logger.info(CommonConstants.RDB_TAG, `updateData() finished: ${ret}`);
+        callback(!resFlag);
+      });
+    }
+  }
+
+  query(predicates: relationalStore.RdbPredicates, callback: Function = () => {
+  }) {
+    if (!callback || typeof callback === 'undefined' || callback === undefined) {
+      Logger.info(CommonConstants.RDB_TAG, 'query() has no callback!');
+      return;
+    }
+    if (this.rdbStore) {
+      this.rdbStore.query(predicates, this.columns, (err, resultSet) => {
+        if (err) {
+          Logger.error(CommonConstants.RDB_TAG, `query() failed, err:  ${err}`);
+          return;
+        }
+        Logger.info(CommonConstants.RDB_TAG, 'query() finished.');
+        callback(resultSet);
+        resultSet.close();
+      });
+    }
+  }
+}
+
+
+```
+
+```ts
+import relationalStore from '@ohos.data.relationalStore';
+import Song from '../model/Song';
+import CommonConstants from './CommonConstants';
+import Rdb from './Rdb';
+
+export default class SongTable {
+  private songTable = new Rdb(CommonConstants.Song_Table.tableName,
+    CommonConstants.Song_Table.sqlCreate, CommonConstants.Song_Table.columns)
+
+  constructor(callback: Function = () => {
+  }) {
+    this.songTable.getRdbStore(callback);
+  }
+
+  getRdbStore(callback: Function = () => {
+  }) {
+    this.songTable.getRdbStore(callback);
+  }
+
+  /**
+   * 初始化数据
+   * @param songs
+   * @param callback
+   */
+  initData(songs: Array<Song>, callback: Function) {
+    for (let i = 0; i < songs.length; i++) {
+      this.insertData(songs[i], () => {
+      });
+    }
+    callback(1);
+  }
+
+  /**
+   * 插入数据
+   * @param song song
+   * @param callback callback
+   */
+  insertData(song: Song, callback: Function) {
+    const valueBucket: relationalStore.ValuesBucket = generateBucket(song);
+    this.songTable.insertData(valueBucket, callback);
+  }
+
+  /**
+   * 删除数据
+   * @param song
+   * @param callback
+   */
+  deleteData(song: Song, callback: Function) {
+    let predicates = new relationalStore.RdbPredicates(CommonConstants.Song_Table.tableName);
+    predicates.equalTo('id', song.id);
+    this.songTable.deleteData(predicates, callback);
+  }
+
+  /**
+   * 更新数据
+   * @param song
+   * @param callback
+   */
+  updateData(song: Song, callback: Function) {
+    const valueBucket: relationalStore.ValuesBucket = generateBucket(song);
+    let predicates = new relationalStore.RdbPredicates(CommonConstants.Song_Table.tableName);
+    predicates.equalTo('id', song.id);
+    this.songTable.updateData(predicates, valueBucket, callback);
+  }
+
+  /**
+   * select *
+   * @param op op
+   * @param callback callback
+   */
+  queryAllData(op: number, callback: Function) {
+    let predicates = new relationalStore.RdbPredicates(CommonConstants.Song_Table.tableName)
+    this.songTable.query(predicates, (result: relationalStore.ResultSet) => {
+      let count = result.rowCount;
+      console.log('count of result:' + count);
+      if (count == 0 || typeof count == 'string') {
+        console.log('query no result');
+      }
+      else {
+        let res: Array<Song> = [];
+        result.goToFirstRow();
+        for (let i = 0;i < count; i++) {
+          let tmp: Song = {
+            id: 0,
+            name: '',
+            author: '',
+            src: '',
+            img: '',
+          }
+          tmp.id = result.getDouble(result.getColumnIndex('id'));
+          tmp.name = result.getString(result.getColumnIndex('name'));
+          tmp.author = result.getString(result.getColumnIndex('author'));
+          tmp.src = result.getString(result.getColumnIndex('src'));
+          tmp.img = result.getString(result.getColumnIndex('img'));
+          res.push(tmp);
+          result.goToNextRow();
+        }
+        callback(res);
+      }
+
+    })
+  }
+}
+
+function generateBucket(song: Song): relationalStore.ValuesBucket {
+  let obj: relationalStore.ValuesBucket = {};
+  obj.id = song.id;
+  obj.name = song.name;
+  obj.author = song.author;
+  obj.src = song.src;
+  obj.img = song.img;
+  return obj;
+}
+```
+
+在 IndexPage 加载的时候初始化 DB 数据
+```ts
+  aboutToAppear(){
+    this.SongTable.getRdbStore(()=>{
+      this.SongTable.initData(this.allList,(res:number)=>{
+        console.log('init song table count is: ' + res)
+      })
+    })
+  }
+```
 
 `FindPage` 是一个用于展示音乐列表并提供播放功能的页面组件。它通过与数据库交互获取音乐列表，并使用 `AvPlayerManager` 来控制音乐的播放和暂停。
 

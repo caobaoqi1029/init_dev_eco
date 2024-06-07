@@ -2,7 +2,7 @@ import { songItemType, recommendListType, recommendDailyType, favoriteListType, 
 
 // 轮播图数据
 export const swiperList: string[] = [
-  "http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/banner1.png",
+  "https://2024-cbq-1311841992.cos.ap-beijing.myqcloud.com/picgo/image-20240607120740528.png",
   "http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/banner2.png",
   "http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/banner3.png",
   "http://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/HeimaCloudMusic/banner4.png",

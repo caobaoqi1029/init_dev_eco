@@ -136,6 +136,7 @@ export struct FindPage {
             }
           }.width('100%') // 将 Text('' + item.id).fontSize(20).fontColor(Color.White) 置于容器左边，一般是在父容器 添加 .width('100%')
         }.onClick(() => {
+          AvPlayerManager.pauseMusic()
           // 播放歌曲
           AvPlayerManager.playMusic(item)
           // 将当前播放 index 赋值
