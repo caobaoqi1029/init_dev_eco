@@ -56,6 +56,7 @@ export struct FindPage {
         .borderColor(Color.Red)
     }
     .onClick(() => {
+      AvPlayerManager.pauseMusic()
       this.musicList.splice(index, 1);
       LogUtils.log('index: ' + index)
     })

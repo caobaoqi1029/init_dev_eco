@@ -24,6 +24,10 @@ export default defineConfig({
         items: [
           { text: "基础结构的搭建", link: "/music/music01" },
           { text: "音乐界面的制作", link: "/music/music02" },
+          { text: "推荐页面", link: "/music/music03" },
+          { text: "发现页面", link: "/music/music04" },
+          { text: "评论页面", link: "/music/music05" },
+          { text: "🏀 Ikun Music", link: "/music/show" },
         ],
       },
     ],
@@ -42,6 +46,10 @@ export default defineConfig({
         items: [
           { text: "基础结构的搭建", link: "/music/music01" },
           { text: "音乐界面的制作", link: "/music/music02" },
+          { text: "推荐页面", link: "/music/music03" },
+          { text: "发现页面", link: "/music/music04" },
+          { text: "评论页面", link: "/music/music05" },
+          { text: "🏀 Ikun Music", link: "/music/show" },
         ],
       },
     ],

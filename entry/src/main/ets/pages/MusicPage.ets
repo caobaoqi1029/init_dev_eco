@@ -205,14 +205,16 @@ export struct MusicPage {
           if (this.currentIndex -1 >= 0 && this.currentIndex < musicList.length) {
             AvPlayerManager.pauseMusic()
             this.currentIndex -= 1
-            AvPlayerManager.playMusic(this.currentMusic[this.currentIndex])
+            this.currentMusic = this.musicList[this.currentIndex]
+            AvPlayerManager.playMusic(this.currentMusic)
           }
         })
         Button('right').layoutWeight(1).onClick(()=>{
           if (this.currentIndex + 1 <= musicList.length&& this.currentIndex > 0) {
             AvPlayerManager.pauseMusic()
             this.currentIndex += 1
-            AvPlayerManager.playMusic(this.currentMusic[this.currentIndex])
+            this.currentMusic = this.musicList[this.currentIndex]
+            AvPlayerManager.playMusic(this.currentMusic)
           }
         })
       }.width('100%').height('10%')

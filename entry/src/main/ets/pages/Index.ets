@@ -60,11 +60,6 @@ struct Index {
         TabContent() {
           MomentPage()
         }.backgroundColor(Color.Black).tabBar(this.TabBuilder('动态', 3, $r('app.media.ic_moment')))
-
-        TabContent() {
-          DBPage()
-        }.backgroundColor(Color.Black).tabBar(this.TabBuilder('动态', 4, $r('app.media.ic_moment')))
-
       }.backgroundColor('#ff353434')
       .onChange((index) => {
         // index 代表当前用户所点击的页面 id
